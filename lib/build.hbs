@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    {{#each css}}
+      <link rel="stylesheet" type="text/css" href="/build/{{this}}">
+    {{/each}}
+  </head>
+  <body>
+    {{{body}}}
+    {{#each js}}
+      <script src="/build/{{this}}"></script>
+    {{/each}}
+  </body>
+</html>

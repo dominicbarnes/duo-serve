@@ -1,0 +1,14 @@
+{
+  "name": "duo-serve",
+  "version": "0.0.1",
+  "dependencies": {
+    "commander": "^2.3.0",
+    "duo": "^0.8.3",
+    "express": "^4.9.0",
+    "gnode": "git://github.com/TooTallNate/gnode#master",
+    "handlebars": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^0.8.1"
+  }
+}
