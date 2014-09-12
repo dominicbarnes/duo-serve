@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+require("gnode"); // FIXME remove this once duo/gnode update
+
+// dependencies
+var path = require("path");
+var program = require("commander");
+var read = require("fs").readFileSync;
+var server = require("../lib/server.js");
+
+// cli parsing
+program
+  .usage("[options] entries")
+  .option("-b, --body <path>", "HTML content for the page (in a file)")
+  .option("-p, --port <number>", "Set the server port number", 3000)
+  .option("-r, --root <path>", "Set the duo root dir", process.cwd())
+  .option("-t, --title <title>", "Set the page title", "duo-serve")
+  .parse(process.argv);
+
+// entry files are required
+if (!program.args.length) program.help();
+
+// init the server
+var srv = server(process.cwd())
+  .title(program.title)
+  .entries(program.args);
+
+// if a body is specified, read the file's contents
+if (program.body) {
+  var body = read(path.resolve(process.cwd(), program.body), "utf8");
+  srv.body(body);
+}
+
+// start the server
+srv.listen(program.port, function () {
+  console.log("duo-serve running at http://localhost:%d", program.port);
+});
