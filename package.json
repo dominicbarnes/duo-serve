@@ -1,6 +1,21 @@
 {
   "name": "duo-serve",
   "version": "0.0.1",
+  "description": "A web server for developers using duo",
+  "keywords": [
+    "duo",
+    "serve",
+    "cli",
+    "tool"
+  ],
+  "homepage": "https://github.com/dominicbarnes/duo-serve",
+  "bugs": "https://github.com/dominicbarnes/duo-serve/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/dominicbarnes/duo-serve.git"
+  },
+  "bin": "duo-serve",
   "dependencies": {
     "commander": "^2.3.0",
     "compression": "^1.1.0",
@@ -8,7 +23,7 @@
     "duo": "^0.8.3",
     "errorhandler": "^1.2.0",
     "express": "^4.9.0",
-    "gnode": "git://github.com/TooTallNate/gnode#master",
+    "gnode": "^0.1.0",
     "handlebars": "^2.0.0",
     "morgan": "^1.3.0"
   },
