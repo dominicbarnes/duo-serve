@@ -24,6 +24,7 @@ $ sudo npm -g install duo-serve
     -p, --port <number>  Set the server port number
     -r, --root <path>    Set the duo root dir
     -t, --title <title>  Set the page title
+    -u, --use <plugins>  Use npm modules or local files as plugins
 
 ```
 
@@ -31,10 +32,12 @@ $ sudo npm -g install duo-serve
 
 ```js
 var serve = require("duo-serve");
+var handlebars = require("duo-handlebars");
 
 serve(process.cwd())
   .title("My Duo Module")
   .entry("index.js")
   .entry("index.css")
+  .use(handlebars())
   .listen(3000);
 ```
