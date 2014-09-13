@@ -4,6 +4,7 @@
   "dependencies": {
     "commander": "^2.3.0",
     "compression": "^1.1.0",
+    "debug": "^2.0.0",
     "duo": "^0.8.3",
     "errorhandler": "^1.2.0",
     "express": "^4.9.0",
