@@ -16,6 +16,7 @@ program
   .option("-p, --port <number>", "Set the server port number", 3000)
   .option("-r, --root <path>", "Set the duo root dir", process.cwd())
   .option("-t, --title <title>", "Set the page title", "duo-serve")
+  .option("-u, --use <plugins>", "Use npm modules or local files as plugins")
   .parse(process.argv);
 
 // entry files are required
