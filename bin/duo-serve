@@ -3,6 +3,7 @@
 require("gnode"); // FIXME remove this once duo/gnode update
 
 // dependencies
+var exists = require("fs").existsSync;
 var path = require("path");
 var program = require("commander");
 var read = require("fs").readFileSync;
@@ -31,7 +32,35 @@ if (program.body) {
   srv.body(body);
 }
 
+// add plugins
+plugins(program.use, program.root).forEach(function (fn) {
+  srv.use(fn);
+});
+
 // start the server
 srv.listen(program.port, function () {
   console.log("duo-serve running at http://localhost:%d", program.port);
 });
+
+/**
+ * Retrieve an array of plugins from `--use`.
+ *
+ * @param {String} plugins
+ * @param {String} root
+ * @return {Array}
+ */
+function plugins(use, root) {
+  if (!use) return [];
+
+  return use.split(",").map(function (plugin) {
+    try {
+      var local = path.resolve(root, plugin);
+      var npm = path.resolve(root, "node_modules", plugin);
+
+      return (require(exists(local) ? local : npm))();
+    } catch (e) {
+      console.error(e.stack);
+      process.exit(1);
+    }
+  });
+}
