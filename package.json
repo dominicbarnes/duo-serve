@@ -1,6 +1,6 @@
 {
   "name": "duo-serve",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A web server for developers using duo",
   "keywords": [
     "duo",
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "http://github.com/dominicbarnes/duo-serve.git"
   },
-  "bin": "duo-serve",
+  "bin": "bin/duo-serve",
   "dependencies": {
     "commander": "^2.3.0",
     "compression": "^1.1.0",
