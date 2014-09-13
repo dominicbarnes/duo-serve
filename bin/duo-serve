@@ -22,7 +22,7 @@ program
 if (!program.args.length) program.help();
 
 // init the server
-var srv = server(process.cwd())
+var srv = server(program.root)
   .title(program.title)
   .entries(program.args);
 
