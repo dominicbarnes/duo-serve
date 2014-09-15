@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-require("gnode"); // FIXME remove this once duo/gnode update
-
 // dependencies
 var exists = require("fs").existsSync;
 var path = require("path");
