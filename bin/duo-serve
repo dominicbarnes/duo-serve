@@ -4,7 +4,6 @@
 var exists = require("fs").existsSync;
 var path = require("path");
 var program = require("commander");
-var read = require("fs").readFileSync;
 var server = require("../lib/server.js");
 
 // cli parsing
@@ -26,10 +25,7 @@ var srv = server(program.root)
   .entries(program.args);
 
 // if a body is specified, read the file's contents
-if (program.body) {
-  var body = read(path.resolve(process.cwd(), program.body), "utf8");
-  srv.body(body);
-}
+if (program.body) srv.body(program.body);
 
 // add plugins
 plugins(program.use, program.root).forEach(function (fn) {
