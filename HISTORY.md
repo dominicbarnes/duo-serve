@@ -1,4 +1,7 @@
 
+# 0.2.0 / 9-23-2014
+ * body is now loaded on each refresh (so config is now a file path)
+
 # 0.1.2 / 9-14-2014
  * removing now unnecessary gnode dep
 
