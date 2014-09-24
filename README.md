@@ -19,8 +19,8 @@ $ sudo npm -g install duo-serve
 
   Options:
 
-    -h, --help           output usage information
-    -b, --body <path>    HTML content for the page (in a file)
+    -h, --help           Output usage information
+    -b, --body <path>    Pahh to text file to use as body of HTML page
     -p, --port <number>  Set the server port number
     -r, --root <path>    Set the duo root dir
     -t, --title <title>  Set the page title
