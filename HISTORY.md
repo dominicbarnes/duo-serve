@@ -1,4 +1,7 @@
 
+# 0.2.1 / 9-25-2014
+ * added `development:true` and `cache:false` to the duo builder
+
 # 0.2.0 / 9-23-2014
  * body is now loaded on each refresh (so config is now a file path)
 
