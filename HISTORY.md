@@ -1,6 +1,9 @@
 
+# 0.3.1 / 9-26-2014
+ * fixing arbitrary paths for entries (#10)
+
 # 0.3.0 / 9-26-2014
- * adding support for completely custom HTML
+ * adding support for completely custom HTML (#8)
 
 # 0.2.1 / 9-25-2014
  * added `development:true` and `cache:false` to the duo builder
