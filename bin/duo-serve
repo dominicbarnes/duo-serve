@@ -10,6 +10,7 @@ var server = require("../lib/server.js");
 program
   .usage("[options] entries")
   .option("-b, --body <path>", "HTML content for the page (in a file)")
+  .option("-h, --html <path>", "Path to custom handlebars template for page")
   .option("-p, --port <number>", "Set the server port number", 3000)
   .option("-r, --root <path>", "Set the duo root dir", process.cwd())
   .option("-t, --title <title>", "Set the page title", "duo-serve")
@@ -24,7 +25,10 @@ var srv = server(program.root)
   .title(program.title)
   .entries(program.args);
 
-// if a body is specified, read the file's contents
+// custom html page
+if (program.html) srv.html(program.html);
+
+// custom html body
 if (program.body) srv.body(program.body);
 
 // add plugins
