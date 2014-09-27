@@ -1,4 +1,7 @@
 
+# 0.3.2 / 9-26-2014
+ * adding support for global export
+
 # 0.3.1 / 9-26-2014
  * fixing arbitrary paths for entries (#10)
 
