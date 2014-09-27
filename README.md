@@ -20,7 +20,8 @@ $ sudo npm -g install duo-serve
   Options:
 
     -h, --help           output usage information
-    -b, --body <path>    HTML content for the page (in a file)
+    -b, --body <path>    Path to file to use as content for page
+    -g, --global <name>  Export as a global with the given name
     -h, --html <path>    Path to custom handlebars template for page
     -p, --port <number>  Set the server port number
     -r, --root <path>    Set the duo root dir
