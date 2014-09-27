@@ -10,6 +10,7 @@ var server = require("../lib/server.js");
 program
   .usage("[options] entries")
   .option("-b, --body <path>", "HTML content for the page (in a file)")
+  .option("-g, --global <name>", "Export as a global with the given name")
   .option("-h, --html <path>", "Path to custom handlebars template for page")
   .option("-p, --port <number>", "Set the server port number", 3000)
   .option("-r, --root <path>", "Set the duo root dir", process.cwd())
@@ -24,6 +25,9 @@ if (!program.args.length) program.help();
 var srv = server(program.root)
   .title(program.title)
   .entries(program.args);
+
+// global
+if (program.global) srv.global(program.global);
 
 // custom html page
 if (program.html) srv.html(program.html);
