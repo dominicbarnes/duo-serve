@@ -1,4 +1,10 @@
 
+# 0.4.0 / 9-27-2014
+ * huge internal cleanup, tests added (#1)
+ * removed `Server#entries()`
+ * changed `Server#entry()` (now accepts an array)
+ * changed `Server#use()` (now accepts an array)
+
 # 0.3.2 / 9-26-2014
  * adding support for global export
 
