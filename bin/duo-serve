@@ -24,7 +24,7 @@ if (!program.args.length) program.help();
 // init the server
 var srv = server(program.root)
   .title(program.title)
-  .entries(program.args);
+  .entry(program.args);
 
 // global
 if (program.global) srv.global(program.global);
@@ -36,9 +36,7 @@ if (program.html) srv.html(program.html);
 if (program.body) srv.body(program.body);
 
 // add plugins
-plugins(program.use, program.root).forEach(function (fn) {
-  srv.use(fn);
-});
+if (program.use) srv.use(plugins(program.use, program.root));
 
 // start the server
 srv.listen(program.port, function () {
