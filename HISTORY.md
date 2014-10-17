@@ -1,4 +1,7 @@
 
+# 0.4.1 / 10-17-2014
+ * updating dependencies all around
+
 # 0.4.0 / 9-27-2014
  * huge internal cleanup, tests added (#1)
  * removed `Server#entries()`
