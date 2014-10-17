@@ -21,7 +21,7 @@
     "compression": "^1.1.0",
     "debug": "^2.0.0",
     "defaults": "^1.0.0",
-    "delegates": "dominicbarnes/node-delegates",
+    "delegates": "^0.1.0",
     "duo": "^0.8.4",
     "errorhandler": "^1.2.0",
     "express": "^4.9.0",
