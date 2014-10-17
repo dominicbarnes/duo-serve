@@ -34,7 +34,7 @@
     "mocha": "^1.21.4",
     "nop": "0.0.0",
     "rimraf": "^2.2.8",
-    "supertest": "^0.13.0"
+    "supertest": "^0.14.0"
   },
   "scripts": {
     "lint": "eslint .",
