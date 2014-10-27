@@ -5,7 +5,7 @@ var request = require("supertest");
 var rm = require("rimraf").sync;
 var Server = require("../");
 
-describe.only("Web Server", function () {
+describe("Web Server", function () {
   var simple = Server(fixture("simple"))
     .title("my title")
     .entry("index.js")

@@ -272,6 +272,22 @@ describe("API", function () {
       var duo = s.build("index.js", done);
       assert.strictEqual(duo.plugins.length, 3); // duo uses 2 by default
     });
+
+    it("should allow a hook for post-processing the build", function (done) {
+      var s = new Server(fixture("simple"));
+
+      s.hook(function (src, file) {
+        assert.equal(src, read(fixture("simple/build.css")));
+        assert.ok(file);
+        return "hello world";
+      });
+
+      s.build("index.css", function (err, src) {
+        if (err) return done(err);
+        assert.equal(src, "hello world");
+        done();
+      });
+    });
   });
 
   describe("Server#handleRender(req, res, next)", function () {
