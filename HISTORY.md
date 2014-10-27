@@ -1,4 +1,8 @@
 
+# 0.5.0 / 10-27-2014
+ * updated duo to `0.8.7`
+ * added `Server#hook()` to the JS API to post-process the duo build
+
 # 0.4.1 / 10-17-2014
  * updating dependencies all around
 
