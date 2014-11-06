@@ -351,6 +351,7 @@ describe("API", function () {
 
     it("should handle errors too", function (done) {
       var s = new Server();
+      s.entry("index.js");
 
       s.build = function (entry, callback) {
         callback(new Error("fail"));
@@ -363,6 +364,16 @@ describe("API", function () {
         assert(err);
         done();
       });
+    });
+
+    it("should handle bypass for static assets", function (done) {
+      var s = new Server();
+      s.entry("index.js");
+
+      var req = { url: "/build/images/bg.png" };
+      var res = {};
+
+      s.handleBuild(req, res, done);
     });
   });
 });

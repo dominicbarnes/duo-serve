@@ -46,4 +46,15 @@ describe("Web Server", function () {
       .expect(200)
       .end(done);
   });
+
+  it("should serve assets properly", function (done) {
+    var s = Server(fixture("assets")).entry("index.css");
+
+    request(s.app)
+      .get("/build/images/bg.png")
+      .expect(200)
+      .expect("Content-Type", "image/png")
+      .expect("Content-Length", 79561)
+      .end(done);
+  });
 });

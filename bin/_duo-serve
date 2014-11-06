@@ -1,0 +1,67 @@
+#!/usr/bin/env node
+
+// dependencies
+var exists = require("fs").existsSync;
+var path = require("path");
+var program = require("commander");
+var server = require("../lib/server.js");
+
+// cli parsing
+program
+  .usage("[options] entries")
+  .option("-b, --body <path>", "HTML content for the page (in a file)")
+  .option("-g, --global <name>", "Export as a global with the given name")
+  .option("-h, --html <path>", "Path to custom handlebars template for page")
+  .option("-p, --port <number>", "Set the server port number", 3000)
+  .option("-r, --root <path>", "Set the duo root dir", process.cwd())
+  .option("-t, --title <title>", "Set the page title", "duo-serve")
+  .option("-u, --use <plugins>", "Use npm modules or local files as plugins")
+  .parse(process.argv);
+
+// entry files are required
+if (!program.args.length) program.help();
+
+// init the server
+var srv = server(program.root)
+  .title(program.title)
+  .entry(program.args);
+
+// global
+if (program.global) srv.global(program.global);
+
+// custom html page
+if (program.html) srv.html(program.html);
+
+// custom html body
+if (program.body) srv.body(program.body);
+
+// add plugins
+if (program.use) srv.use(plugins(program.use, program.root));
+
+// start the server
+srv.listen(program.port, function () {
+  console.log("duo-serve running at http://localhost:%d", program.port);
+});
+
+/**
+ * Retrieve an array of plugins from `--use`.
+ *
+ * @param {String} plugins
+ * @param {String} root
+ * @return {Array}
+ */
+function plugins(use, root) {
+  if (!use) return [];
+
+  return use.split(",").map(function (plugin) {
+    try {
+      var local = path.resolve(root, plugin);
+      var npm = path.resolve(root, "node_modules", plugin);
+
+      return (require(exists(local) ? local : npm))();
+    } catch (e) {
+      console.error(e.stack);
+      process.exit(1);
+    }
+  });
+}

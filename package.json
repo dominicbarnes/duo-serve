@@ -1,6 +1,6 @@
 {
   "name": "duo-serve",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A web server for developers using duo",
   "keywords": [
     "duo",
@@ -15,7 +15,10 @@
     "type": "git",
     "url": "http://github.com/dominicbarnes/duo-serve.git"
   },
-  "bin": "bin/duo-serve",
+  "bin": {
+    "duo-serve": "./bin/duo-serve",
+    "_duo-serve": "./bin/_duo-serve"
+  },
   "dependencies": {
     "commander": "^2.4.0",
     "compression": "^1.2.0",
@@ -25,8 +28,11 @@
     "duo": "^0.8.4",
     "errorhandler": "^1.2.0",
     "express": "^4.9.0",
+    "gnode": "^0.1.0",
     "handlebars": "^2.0.0",
-    "morgan": "^1.4.0"
+    "morgan": "^1.4.0",
+    "serve-static": "^1.7.1",
+    "win-fork": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^0.8.1",

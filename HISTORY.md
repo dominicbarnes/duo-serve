@@ -1,4 +1,8 @@
 
+# 0.6.0 / 11-06-2014
+ * added `_duo-serve` bin (`duo-serve` now forks with the `--harmony` flag enabled)
+ * fixed asset support, added tests to prevent regression
+
 # 0.5.0 / 10-27-2014
  * updated duo to `0.8.7`
  * added `Server#hook()` to the JS API to post-process the duo build
