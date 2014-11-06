@@ -31,6 +31,7 @@
     "gnode": "^0.1.0",
     "handlebars": "^2.0.0",
     "morgan": "^1.4.0",
+    "serve-static": "^1.7.1",
     "win-fork": "^1.1.1"
   },
   "devDependencies": {
