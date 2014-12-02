@@ -1,4 +1,7 @@
 
+# 0.6.1 / 12-02-2014
+ * added duo logo as favicon
+
 # 0.6.0 / 11-06-2014
  * added `_duo-serve` bin (`duo-serve` now forks with the `--harmony` flag enabled)
  * fixed asset support, added tests to prevent regression
