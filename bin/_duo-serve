@@ -10,6 +10,7 @@ var server = require("../lib/server.js");
 program
   .usage("[options] entries")
   .option("-b, --body <path>", "HTML content for the page (in a file)")
+  .option("-c, --copy", "Turns on copy (instead of symlink)")
   .option("-g, --global <name>", "Export as a global with the given name")
   .option("-h, --html <path>", "Path to custom handlebars template for page")
   .option("-p, --port <number>", "Set the server port number", 3000)
