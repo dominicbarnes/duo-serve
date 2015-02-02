@@ -20,6 +20,7 @@ $ sudo npm -g install duo-serve
   Options:
 
     -h, --help           output usage information
+    -c, --copy           Turns on copy instead of symlink
     -b, --body <path>    Path to file to use as content for page
     -g, --global <name>  Export as a global with the given name
     -h, --html <path>    Path to custom handlebars template for page

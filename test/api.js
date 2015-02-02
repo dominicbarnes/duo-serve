@@ -27,7 +27,9 @@ describe("API", function () {
     it("should have accessor methods", function () {
       var s = new Server();
       assert.equal(typeof s.body, "function");
+      assert.equal(typeof s.copy, "function");
       assert.equal(typeof s.global, "function");
+      assert.equal(typeof s.hook, "function");
       assert.equal(typeof s.html, "function");
       assert.equal(typeof s.root, "function");
       assert.equal(typeof s.title, "function");
@@ -153,6 +155,20 @@ describe("API", function () {
       });
     });
 
+    it("should allow a function to be used", function (done) {
+      var s = new Server();
+      s.body(function (done) {
+        process.nextTick(function () {
+          done(null, "body");
+        });
+      });
+      s.getBody(function (err, body) {
+        if (err) return done(err);
+        assert.equal(body, "body");
+        done();
+      });
+    });
+
     it("should return the given file", function (done) {
       var s = new Server();
       s.body(fixture("custom-template/index.hbs"));
@@ -264,6 +280,13 @@ describe("API", function () {
       s.global("test");
       var duo = s.build("index.js", done);
       assert.strictEqual(duo.global(), "test");
+    });
+
+    it("should switch the copy flag", function (done) {
+      var s = new Server(fixture("simple"));
+      s.copy(true);
+      var duo = s.build("index.js", done);
+      assert.strictEqual(duo.copy(), true);
     });
 
     it("should add to the duo plugins", function (done) {
