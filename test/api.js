@@ -155,6 +155,20 @@ describe("API", function () {
       });
     });
 
+    it("should allow a function to be used", function (done) {
+      var s = new Server();
+      s.body(function (done) {
+        process.nextTick(function () {
+          done(null, "body");
+        });
+      });
+      s.getBody(function (err, body) {
+        if (err) return done(err);
+        assert.equal(body, "body");
+        done();
+      });
+    });
+
     it("should return the given file", function (done) {
       var s = new Server();
       s.body(fixture("custom-template/index.hbs"));
