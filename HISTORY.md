@@ -1,4 +1,8 @@
 
+# 0.7.0 / 2-1-2015
+ * added `Server#copy()` to hook into copy/symlink logic
+ * allowing `body` to be generated via function
+
 # 0.6.1 / 12-02-2014
  * added duo logo as favicon
 
