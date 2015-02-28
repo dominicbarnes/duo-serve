@@ -1,4 +1,7 @@
 
+# 0.7.1 / 2-28-2015
+ * updating deps (`duo@0.9` in particular)
+
 # 0.7.0 / 2-1-2015
  * added `Server#copy()` to hook into copy/symlink logic
  * allowing `body` to be generated via function
