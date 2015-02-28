@@ -59,7 +59,9 @@ function plugins(use, root) {
       var local = path.resolve(root, plugin);
       var npm = path.resolve(root, "node_modules", plugin);
 
-      return (require(exists(local) ? local : npm))();
+      var mod = require(exists(local) ? local : npm);
+      if (!Array.isArray(mod)) mod = mod();
+      return mod;
     } catch (e) {
       console.error(e.stack);
       process.exit(1);
