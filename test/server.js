@@ -1,9 +1,11 @@
+var assert = require("assert");
 var fixture = require("path").join.bind(null, __dirname, "fixtures");
 var glob = require("glob").sync;
 var read = require("fs").readFileSync;
 var request = require("supertest");
 var rm = require("rimraf").sync;
 var Server = require("../");
+var vm = require("vm");
 
 describe("Web Server", function () {
   var simple = Server(fixture("simple"))
@@ -34,8 +36,17 @@ describe("Web Server", function () {
   it("should render the expected js", function (done) {
     request(simple.app)
       .get("/build/index.js")
-      .expect(200, read(fixture("simple/build.js"), "utf8"))
-      .end(done);
+      .expect(200)
+      .end(function (err, res) {
+        if (err) return done(err);
+
+        var src = "result = " + res.text;
+        var ctx = {};
+        vm.runInNewContext(src, ctx);
+        assert.strictEqual(ctx.result(1), true, "script should export true");
+
+        done();
+      });
   });
 
   it("should allow nested paths", function (done) {
