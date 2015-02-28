@@ -19,6 +19,7 @@
     "duo-serve": "./bin/duo-serve",
     "_duo-serve": "./bin/_duo-serve"
   },
+  "main": "lib/server.js",
   "dependencies": {
     "commander": "^2.4.0",
     "compression": "^1.2.0",
