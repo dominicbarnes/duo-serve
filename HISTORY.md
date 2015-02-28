@@ -1,4 +1,7 @@
 
+# 0.8.0 / 2-28-2015
+ * supporting exported array of plugins for `--use` in CLI
+
 # 0.7.1 / 2-28-2015
  * updating deps (`duo@0.9` in particular)
 
