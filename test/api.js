@@ -29,7 +29,6 @@ describe("API", function () {
       assert.equal(typeof s.body, "function");
       assert.equal(typeof s.copy, "function");
       assert.equal(typeof s.global, "function");
-      assert.equal(typeof s.hook, "function");
       assert.equal(typeof s.html, "function");
       assert.equal(typeof s.root, "function");
       assert.equal(typeof s.title, "function");
@@ -287,29 +286,6 @@ describe("API", function () {
       s.copy(true);
       var duo = s.build("index.js", done);
       assert.strictEqual(duo.copy(), true);
-    });
-
-    it("should add to the duo plugins", function (done) {
-      var s = new Server(fixture("simple"));
-      s.use(noop);
-      var duo = s.build("index.js", done);
-      assert.strictEqual(duo.plugins.length, 3); // duo uses 2 by default
-    });
-
-    it("should allow a hook for post-processing the build", function (done) {
-      var s = new Server(fixture("simple"));
-
-      s.hook(function (src, file) {
-        assert.equal(src, read(fixture("simple/build.css")));
-        assert.ok(file);
-        return "hello world";
-      });
-
-      s.build("index.css", function (err, src) {
-        if (err) return done(err);
-        assert.equal(src, "hello world");
-        done();
-      });
     });
   });
 
