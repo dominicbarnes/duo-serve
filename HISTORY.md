@@ -1,4 +1,9 @@
 
+# 0.9.0 / 3-29-2015
+ * **BREAKING** removing gnode and node 0.10 support from core
+ * upgrading deps (of note: `duo@0.11.1`)
+ * dropping `Server#hook()` (newer duo supports post-build plugins)
+
 # 0.8.0 / 2-28-2015
  * supporting exported array of plugins for `--use` in CLI
 
