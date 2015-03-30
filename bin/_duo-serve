@@ -3,11 +3,11 @@
 // dependencies
 var exists = require("fs").existsSync;
 var path = require("path");
-var program = require("commander");
+var Command = require("commander").Command;
 var server = require("../lib/server.js");
 
 // cli parsing
-program
+var program = new Command('duo-serve')
   .usage("[options] entries")
   .option("-b, --body <path>", "HTML content for the page (in a file)")
   .option("-c, --copy", "Turns on copy (instead of symlink)")
