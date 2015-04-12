@@ -1,4 +1,8 @@
 
+# 0.10.0 / 4-12-2015
+ * automatically setting GitHub API token
+ * adding `Server#token()` and `-T, --token` for setting token explicitly
+
 # 0.9.0 / 3-29-2015
  * **BREAKING** removing gnode and node 0.10 support from core
  * upgrading deps (of note: `duo@0.11.1`)

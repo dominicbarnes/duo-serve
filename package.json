@@ -1,6 +1,6 @@
 {
   "name": "duo-serve",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "A web server for developers using duo",
   "keywords": [
     "duo",
@@ -32,6 +32,7 @@
     "handlebars": "^3.0.0",
     "has-generators": "^1.0.1",
     "morgan": "^1.4.0",
+    "node-netrc": "0.0.1",
     "serve-favicon": "^2.1.7",
     "serve-static": "^1.7.1",
     "win-fork": "^1.1.1"
