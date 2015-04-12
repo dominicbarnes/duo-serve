@@ -1,4 +1,7 @@
 
+# 0.10.1 / 4-12-2015
+ * fixing CLI processing of `--token` flag
+
 # 0.10.0 / 4-12-2015
  * automatically setting GitHub API token
  * adding `Server#token()` and `-T, --token` for setting token explicitly
