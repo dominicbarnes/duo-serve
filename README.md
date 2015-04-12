@@ -20,13 +20,14 @@ $ sudo npm -g install duo-serve
   Options:
 
     -h, --help           output usage information
-    -c, --copy           Turns on copy instead of symlink
     -b, --body <path>    Path to file to use as content for page
+    -c, --copy           Turns on copy instead of symlink
     -g, --global <name>  Export as a global with the given name
     -h, --html <path>    Path to custom handlebars template for page
     -p, --port <number>  Set the server port number
     -r, --root <path>    Set the duo root dir
     -t, --title <title>  Set the page title
+    -T, --token <token>  Set the GitHub API token (default uses ~/.netrc)
     -u, --use <plugins>  Use npm modules or local files as plugins
 
 ```
