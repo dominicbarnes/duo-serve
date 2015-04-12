@@ -18,7 +18,9 @@ describe("API", function () {
 
     it("should set some properties", function () {
       var s = new Server();
-      assert.deepEqual(s.settings, Server.defaults);
+      Object.keys(Server.defaults).forEach(function (setting) {
+        assert.strictEqual(s.settings[setting], Server.defaults[setting]);
+      });
       assert(s.app);
       assert(Array.isArray(s.plugins));
       assert.deepEqual(s.entries, {});
@@ -32,6 +34,7 @@ describe("API", function () {
       assert.equal(typeof s.html, "function");
       assert.equal(typeof s.root, "function");
       assert.equal(typeof s.title, "function");
+      assert.equal(typeof s.token, "function");
     });
 
     it("should have delegated methods", function () {
