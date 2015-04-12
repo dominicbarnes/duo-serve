@@ -16,7 +16,7 @@ var program = new Command('duo-serve')
   .option("-p, --port <number>", "Set the server port number", 3000)
   .option("-r, --root <path>", "Set the duo root dir", process.cwd())
   .option("-t, --title <title>", "Set the page title", "duo-serve")
-  .option("-T, --token <token>", "Set the GitHub API token", "(read from ~/.netrc)")
+  .option("-T, --token <token>", "Set the GitHub API token (default uses ~/.netrc)", false)
   .option("-u, --use <plugins>", "Use npm modules or local files as plugins")
   .parse(process.argv);
 
