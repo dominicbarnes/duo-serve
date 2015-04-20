@@ -8,10 +8,11 @@ var Server = require('../');
 var vm = require('vm');
 
 describe('Web Server', function () {
-  var simple = Server(fixture('simple'))
+  var app = Server(fixture('simple'))
     .title('my title')
     .entry('index.js')
-    .entry('index.css');
+    .entry('index.css')
+    .server();
 
   after(function () {
     glob(fixture('*/components')).forEach(function (dir) {
@@ -20,21 +21,21 @@ describe('Web Server', function () {
   });
 
   it('should render the expected root', function (done) {
-    request(simple.app)
+    request(app)
       .get('/')
       .expect(200, read(fixture('simple/out.html'), 'utf8'))
       .end(done);
   });
 
   it('should render the expected css', function (done) {
-    request(simple.app)
+    request(app)
       .get('/build/index.css')
       .expect(200, read(fixture('simple/build.css'), 'utf8'))
       .end(done);
   });
 
   it('should render the expected js', function (done) {
-    request(simple.app)
+    request(app)
       .get('/build/index.js')
       .expect(200)
       .end(function (err, res) {
@@ -52,7 +53,7 @@ describe('Web Server', function () {
   it('should allow nested paths', function (done) {
     var s = Server(fixture('nested-paths')).entry('index.js');
 
-    request(s.app)
+    request(s.server())
       .get('/build/app/index.js')
       .expect(200)
       .end(done);
@@ -61,7 +62,7 @@ describe('Web Server', function () {
   it('should serve assets properly', function (done) {
     var s = Server(fixture('assets')).entry('index.css');
 
-    request(s.app)
+    request(s.server())
       .get('/build/images/bg.png')
       .expect(200)
       .expect('Content-Type', 'image/png')

@@ -19,32 +19,39 @@ describe('API', function () {
     it('should set some properties', function () {
       var s = new Server();
       Object.keys(Server.defaults).forEach(function (setting) {
-        assert.strictEqual(s.settings[setting], Server.defaults[setting]);
+        var actual = s.settings[setting];
+        var expected = Server.defaults[setting];
+        assert.strictEqual(actual, expected, 'mismatched setting ' + setting);
       });
-      assert(s.app);
       assert(Array.isArray(s.plugins));
       assert.deepEqual(s.entries, {});
     });
 
     it('should have accessor methods', function () {
       var s = new Server();
-      assert.equal(typeof s.body, 'function');
-      assert.equal(typeof s.copy, 'function');
-      assert.equal(typeof s.global, 'function');
-      assert.equal(typeof s.html, 'function');
-      assert.equal(typeof s.root, 'function');
-      assert.equal(typeof s.title, 'function');
-      assert.equal(typeof s.token, 'function');
-    });
 
-    it('should have delegated methods', function () {
-      var s = new Server();
-      assert.equal(typeof s.listen, 'function');
+      var methods = [
+        'body', 'copy', 'favicon', 'global', 'html',
+        'logging', 'root', 'title', 'token'
+      ];
+
+      methods.forEach(function (method) {
+        var actual = s[method]();
+        var expected = s.settings[method];
+        assert.strictEqual(actual, expected, 'expected ' + method + ' accessor to work');
+      });
     });
 
     it('should set the root when passed', function () {
       var s = new Server('test');
       assert.equal(s.root(), 'test');
+    });
+  });
+
+  describe('Server#server()', function () {
+    it('should return an express application', function () {
+      var s = new Server('test');
+      assert.equal(typeof s.server().listen, 'function');
     });
   });
 
