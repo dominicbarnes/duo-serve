@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 
 // dependencies
-var exists = require("fs").existsSync;
-var path = require("path");
-var Command = require("commander").Command;
-var server = require("../lib/server.js");
+var exists = require('fs').existsSync;
+var path = require('path');
+var Command = require('commander').Command;
+var server = require('../lib/server.js');
 
 // cli parsing
 var program = new Command('duo-serve')
-  .usage("[options] entries")
-  .option("-b, --body <path>", "HTML content for the page (in a file)")
-  .option("-c, --copy", "Turns on copy (instead of symlink)")
-  .option("-g, --global <name>", "Export as a global with the given name")
-  .option("-h, --html <path>", "Path to custom handlebars template for page")
-  .option("-p, --port <number>", "Set the server port number", 3000)
-  .option("-r, --root <path>", "Set the duo root dir", process.cwd())
-  .option("-t, --title <title>", "Set the page title", "duo-serve")
-  .option("-T, --token <token>", "Set the GitHub API token (default uses ~/.netrc)", false)
-  .option("-u, --use <plugins>", "Use npm modules or local files as plugins")
+  .usage('[options] entries')
+  .option('-b, --body <path>', 'HTML content for the page (in a file)')
+  .option('-c, --copy', 'Turns on copy (instead of symlink)')
+  .option('-g, --global <name>', 'Export as a global with the given name')
+  .option('-h, --html <path>', 'Path to custom handlebars template for page')
+  .option('-p, --port <number>', 'Set the server port number', 3000)
+  .option('-r, --root <path>', 'Set the duo root dir', process.cwd())
+  .option('-t, --title <title>', 'Set the page title', 'duo-serve')
+  .option('-T, --token <token>', 'Set the GitHub API token (default uses ~/.netrc)', false)
+  .option('-u, --use <plugins>', 'Use npm modules or local files as plugins')
   .parse(process.argv);
 
 // entry files are required
@@ -45,7 +45,7 @@ if (program.token) srv.token(program.token);
 
 // start the server
 srv.listen(program.port, function () {
-  console.log("duo-serve running at http://localhost:%d", program.port);
+  console.log('duo-serve running at http://localhost:%d', program.port);
 });
 
 /**
@@ -58,10 +58,10 @@ srv.listen(program.port, function () {
 function plugins(use, root) {
   if (!use) return [];
 
-  return use.split(",").map(function (plugin) {
+  return use.split(',').map(function (plugin) {
     try {
       var local = path.resolve(root, plugin);
-      var npm = path.resolve(root, "node_modules", plugin);
+      var npm = path.resolve(root, 'node_modules', plugin);
 
       var mod = require(exists(local) ? local : npm);
       if (!Array.isArray(mod)) mod = mod();

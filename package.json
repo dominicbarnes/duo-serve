@@ -1,6 +1,6 @@
 {
   "name": "duo-serve",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "A web server for developers using duo",
   "keywords": [
     "duo",
@@ -38,7 +38,7 @@
     "win-fork": "^1.1.1"
   },
   "devDependencies": {
-    "eslint": "^0.18.0",
+    "eslint": "^0.19.0",
     "glob": "^5.0.3",
     "mocha": "^2.2.1",
     "nop": "^1.0.0",

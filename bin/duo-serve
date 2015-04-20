@@ -4,28 +4,28 @@
  * Module dependencies.
  */
 
-var path = require("path");
-var spawn = require("win-fork");
+var path = require('path');
+var spawn = require('win-fork');
 
 /**
  * Resolve.
  */
 
-var bin = path.resolve(__dirname, "_duo-serve");
+var bin = path.resolve(__dirname, '_duo-serve');
 var args = [bin].concat(process.argv.slice(2));
 
-if (!require("has-generators")) args.unshift("--harmony-generators");
+if (!require('has-generators')) args.unshift('--harmony-generators');
 
 /**
  * Spawn.
  */
 
-var proc = spawn(process.execPath, args, { stdio: "inherit" });
+var proc = spawn(process.execPath, args, { stdio: 'inherit' });
 
 /**
  * Exit.
  */
 
-proc.on("exit", function (code) {
+proc.on('exit', function (code) {
   process.exit(code);
 });

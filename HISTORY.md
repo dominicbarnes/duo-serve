@@ -1,4 +1,8 @@
 
+# 0.11.0 / 4-19-2015
+ * added `Server#server()` as the express app generator
+ * updated `Server#listen()` to use `Server#server()` instead
+
 # 0.10.1 / 4-12-2015
  * fixing CLI processing of `--token` flag
 
