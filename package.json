@@ -38,7 +38,7 @@
     "win-fork": "^1.1.1"
   },
   "devDependencies": {
-    "eslint": "^0.18.0",
+    "eslint": "^0.19.0",
     "glob": "^5.0.3",
     "mocha": "^2.2.1",
     "nop": "^1.0.0",
