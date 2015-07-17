@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // dependencies
+var chalk = require('chalk');
 var exists = require('fs').existsSync;
 var path = require('path');
 var Command = require('commander').Command;
@@ -11,6 +12,7 @@ var program = new Command('duo-serve')
   .usage('[options] entries')
   .option('-b, --body <path>', 'HTML content for the page (in a file)')
   .option('-c, --copy', 'Turns on copy (instead of symlink)')
+  .option('-C, --no-cache', 'Disables the cache during build', true)
   .option('-g, --global <name>', 'Export as a global with the given name')
   .option('-h, --html <path>', 'Path to custom handlebars template for page')
   .option('-p, --port <number>', 'Set the server port number', 3000)
@@ -26,6 +28,7 @@ if (!program.args.length) program.help();
 // init the server
 var srv = server(program.root)
   .title(program.title)
+  .cache(program.cache)
   .entry(program.args);
 
 // global
@@ -45,7 +48,9 @@ if (program.token) srv.token(program.token);
 
 // start the server
 srv.listen(program.port, function () {
-  console.log('duo-serve running at http://localhost:%d', program.port);
+  console.log();
+  console.log(' %s duo-serve running at %s', chalk.green('↑'), chalk.cyan('http://localhost:' + program.port + '/'));
+  console.log();
 });
 
 /**

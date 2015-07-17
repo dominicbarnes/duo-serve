@@ -277,11 +277,10 @@ describe('API', function () {
       assert(s.build('index.css', done) instanceof Duo);
     });
 
-    it('should turn on development mode and disable the cache', function (done) {
+    it('should turn on development mode', function (done) {
       var s = new Server(fixture('simple'));
       var duo = s.build('index.css', done);
       assert.strictEqual(duo.development(), true);
-      assert.strictEqual(duo.cache(), false);
     });
 
     it('should set the duo global', function (done) {
