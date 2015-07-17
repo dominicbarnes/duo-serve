@@ -21,6 +21,7 @@
   },
   "main": "lib/server.js",
   "dependencies": {
+    "chalk": "^1.1.0",
     "commander": "^2.4.0",
     "compression": "^1.2.0",
     "debug": "^2.1.0",
