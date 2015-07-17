@@ -1,4 +1,9 @@
 
+# 0.12.0 / 2015-07-17
+  * dependencies: updates (duo in particular)
+  * no longer disables the cache by default
+  * prettier boot message
+
 # 0.11.0 / 4-19-2015
  * added `Server#server()` as the express app generator
  * updated `Server#listen()` to use `Server#server()` instead
