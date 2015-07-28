@@ -1,4 +1,8 @@
 
+# 0.12.1 / 2015-07-27
+  * check GH_TOKEN env var for token
+  * upgrade duo
+
 # 0.12.0 / 2015-07-17
   * dependencies: updates (duo in particular)
   * no longer disables the cache by default
