@@ -27,6 +27,13 @@ describe('Web Server', function () {
       .end(done);
   });
 
+  it('should render the root even for alternate paths', function (done) {
+    request(app)
+      .get('/hello/world')
+      .expect(200, read(fixture('simple/out.html'), 'utf8'))
+      .end(done);
+  });
+
   it('should render the expected css', function (done) {
     request(app)
       .get('/build/index.css')
