@@ -1,4 +1,9 @@
 
+0.13.0 / 2015-08-04
+===================
+
+  * allowing any path to serve the root (for spa-like apps)
+
 # 0.12.1 / 2015-07-27
   * check GH_TOKEN env var for token
   * upgrade duo
