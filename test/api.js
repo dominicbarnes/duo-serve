@@ -264,38 +264,38 @@ describe('API', function () {
     });
   });
 
-  describe('Server#build(callback)', function () {
+  describe('Server#build(entry, sourceMap, callback)', function () {
     it('should render the file via duo', function (done) {
       var s = new Server(fixture('simple'));
-      s.build('index.js', function (err, src) {
+      s.build('index.js', 'inline', function (err, src) {
         if (err) return done(err);
-        assert.strictEqual(vm.runInNewContext(src)(1), true);
+        assert.strictEqual(vm.runInNewContext(src.code)(1), true);
         done();
       });
     });
 
     it('should return the duo builder instance', function (done) {
       var s = new Server(fixture('simple'));
-      assert(s.build('index.css', done) instanceof Duo);
+      assert(s.build('index.css', 'inline', done) instanceof Duo);
     });
 
     it('should turn on development mode', function (done) {
       var s = new Server(fixture('simple'));
-      var duo = s.build('index.css', done);
+      var duo = s.build('index.css', 'inline', done);
       assert.strictEqual(duo.development(), true);
     });
 
     it('should set the duo global', function (done) {
       var s = new Server(fixture('simple'));
       s.global('test');
-      var duo = s.build('index.js', done);
+      var duo = s.build('index.js', 'inline', done);
       assert.strictEqual(duo.global(), 'test');
     });
 
     it('should switch the copy flag', function (done) {
       var s = new Server(fixture('simple'));
       s.copy(true);
-      var duo = s.build('index.js', done);
+      var duo = s.build('index.js', 'inline', done);
       assert.strictEqual(duo.copy(), true);
     });
   });
@@ -321,7 +321,7 @@ describe('API', function () {
         if (err) return done(err);
         var actual = read(fixture('build-to/output/index.html'), 'utf8');
         var expected = read(fixture('build-to/out.html'), 'utf8');
-        assert.equal(actual, expected);
+        assert.equal(actual.trim(), expected.trim());
         done();
       });
     });
@@ -331,7 +331,17 @@ describe('API', function () {
         if (err) return done(err);
         var actual = read(fixture('build-to/output/index.js'), 'utf8');
         var expected = read(fixture('build-to/build.js'), 'utf8');
-        assert.equal(actual, expected);
+        assert.equal(actual.trim(), expected.trim());
+        done();
+      });
+    });
+
+    it('should render the js map to the destination directory', function (done) {
+      s.buildTo('output', function (err) {
+        if (err) return done(err);
+        var actual = read(fixture('build-to/output/index.js.map'), 'utf8');
+        var expected = read(fixture('build-to/build.js.map'), 'utf8');
+        assert.equal(actual.trim(), expected.trim());
         done();
       });
     });
@@ -341,7 +351,7 @@ describe('API', function () {
         if (err) return done(err);
         var actual = read(fixture('build-to/output/index.css'), 'utf8');
         var expected = read(fixture('build-to/build.css'), 'utf8');
-        assert.equal(actual, expected);
+        assert.equal(actual.trim(), expected.trim());
         done();
       });
     });
@@ -410,7 +420,7 @@ describe('API', function () {
       var s = new Server();
       s.entry('index.js');
 
-      s.build = function (entry, callback) {
+      s.build = function (entry, sourceMap, callback) {
         callback(new Error('fail'));
       };
 
