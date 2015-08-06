@@ -41,7 +41,10 @@
     "win-fork": "^1.1.1"
   },
   "devDependencies": {
-    "eslint": "^0.24.1",
+    "@dominicbarnes/eslint-config": "*",
+    "@dominicbarnes/eslint-config-node": "*",
+    "@dominicbarnes/eslint-config-test": "*",
+    "eslint": "^1.0.0",
     "glob": "^5.0.3",
     "mocha": "^2.2.1",
     "nop": "^1.0.0",

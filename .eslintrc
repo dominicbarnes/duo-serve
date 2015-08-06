@@ -1,12 +1,3 @@
 {
-  "env": {
-    "node": true
-  },
-  "rules": {
-    "curly": 0,
-    "no-shadow": 0,
-    "no-use-before-define": 0,
-    "quotes": [ 2, "single" ],
-    "strict": 0
-  }
+  "extends": "@dominicbarnes/node"
 }
