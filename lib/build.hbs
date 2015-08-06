@@ -3,13 +3,13 @@
   <head>
     <title>{{title}}</title>
     {{#each css}}
-      <link rel="stylesheet" type="text/css" href="/build/{{this}}">
+      <link rel="stylesheet" type="text/css" href="{{@root.base}}{{this}}">
     {{/each}}
   </head>
   <body>
     {{{body}}}
     {{#each js}}
-      <script src="/build/{{this}}"></script>
+      <script src="{{@root.base}}{{this}}"></script>
     {{/each}}
   </body>
 </html>

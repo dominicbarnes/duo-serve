@@ -1,8 +1,10 @@
 var assert = require('assert');
 var Duo = require('duo');
+var exists = require('fs').existsSync;
 var fixture = require('path').join.bind(null, __dirname, 'fixtures');
 var noop = require('nop');
 var read = require('fs').readFileSync;
+var rm = require('rimraf').sync;
 var Server = require('../');
 var vm = require('vm');
 
@@ -213,13 +215,13 @@ describe('API', function () {
     });
   });
 
-  describe('Server#render(callback)', function () {
+  describe('Server#render(base, callback)', function () {
     it('should render basic html', function (done) {
       Server()
         .title('my title')
         .entry('index.js')
         .entry('index.css')
-        .render(function (err, html) {
+        .render('/build/', function (err, html) {
           if (err) return done(err);
           assert.equal(html, read(fixture('simple/out.html'), 'utf8'));
           done();
@@ -229,7 +231,7 @@ describe('API', function () {
     it('should use the proper context for success', function (done) {
       var s = new Server();
 
-      s.render(function (err) {
+      s.render('/build/', function (err) {
         if (err) return done(err);
         assert.strictEqual(this, s);
         done();
@@ -239,7 +241,7 @@ describe('API', function () {
     it('should use the proper context for html error', function (done) {
       var s = new Server();
       s.html('does-not-exist');
-      s.render(function (err) {
+      s.render('/build/', function (err) {
         assert(err);
         assert.strictEqual(this, s);
         done();
@@ -249,7 +251,7 @@ describe('API', function () {
     it('should use the proper context for body error', function (done) {
       var s = new Server();
       s.body('does-not-exist');
-      s.render(function (err) {
+      s.render('/build/', function (err) {
         assert(err);
         assert.strictEqual(this, s);
         done();
@@ -258,7 +260,7 @@ describe('API', function () {
 
     it('should be chainable', function (done) {
       var s = new Server();
-      assert.strictEqual(s, s.render(done));
+      assert.strictEqual(s, s.render('/build/', done));
     });
   });
 
@@ -298,6 +300,53 @@ describe('API', function () {
     });
   });
 
+  describe('Server#buildTo(destination, callback)', function () {
+    var s = new Server(fixture('build-to')).entry([ 'index.js', 'index.css' ]);
+
+    afterEach(function () {
+      rm(fixture('build-to/components'));
+      rm(fixture('build-to/output'));
+    });
+
+    it('should create the destination directory', function (done) {
+      s.buildTo('output', function (err) {
+        if (err) return done(err);
+        assert(exists(fixture('build-to/output')));
+        done();
+      });
+    });
+
+    it('should render the html to the destination directory', function (done) {
+      s.buildTo('output', function (err) {
+        if (err) return done(err);
+        var actual = read(fixture('build-to/output/index.html'), 'utf8');
+        var expected = read(fixture('build-to/out.html'), 'utf8');
+        assert.equal(actual, expected);
+        done();
+      });
+    });
+
+    it('should render the js to the destination directory', function (done) {
+      s.buildTo('output', function (err) {
+        if (err) return done(err);
+        var actual = read(fixture('build-to/output/index.js'), 'utf8');
+        var expected = read(fixture('build-to/build.js'), 'utf8');
+        assert.equal(actual, expected);
+        done();
+      });
+    });
+
+    it('should render the css to the destination directory', function (done) {
+      s.buildTo('output', function (err) {
+        if (err) return done(err);
+        var actual = read(fixture('build-to/output/index.css'), 'utf8');
+        var expected = read(fixture('build-to/build.css'), 'utf8');
+        assert.equal(actual, expected);
+        done();
+      });
+    });
+  });
+
   describe('Server#handleRender(req, res, next)', function () {
     it('should render the index', function (done) {
       var s = new Server();
@@ -319,7 +368,7 @@ describe('API', function () {
     it('should handle errors too', function (done) {
       var s = new Server();
 
-      s.render = function (callback) {
+      s.render = function (base, callback) {
         callback(new Error('fail'));
       };
 

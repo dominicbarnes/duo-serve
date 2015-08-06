@@ -15,6 +15,7 @@ var program = new Command('duo-serve')
   .option('-C, --no-cache', 'Disables the cache during build', true)
   .option('-g, --global <name>', 'Export as a global with the given name')
   .option('-h, --html <path>', 'Path to custom handlebars template for page')
+  .option('-o, --output <path>', 'Create a static build in the given path')
   .option('-p, --port <number>', 'Set the server port number', 3000)
   .option('-r, --root <path>', 'Set the duo root dir', process.cwd())
   .option('-t, --title <title>', 'Set the page title', 'duo-serve')
@@ -46,12 +47,27 @@ if (program.use) srv.use(plugins(program.use, program.root));
 // set token
 if (program.token) srv.token(program.token);
 
-// start the server
-srv.listen(program.port, function () {
-  console.log();
-  console.log(' %s duo-serve running at %s', chalk.green('↑'), chalk.cyan('http://localhost:' + program.port + '/'));
-  console.log();
-});
+// build into a static site
+if (program.output) {
+  srv.buildTo(program.output, function (err) {
+    if (err) {
+      console.error();
+      console.error(' %s could not build because: %s', chalk.red('✕'), chalk.red(err.stack || err.message));
+      console.error();
+    } else {
+      console.log();
+      console.log(' %s built successfully to %s', chalk.green('✓'), chalk.cyan(program.output));
+      console.log();
+    }
+  });
+} else {
+  // start the server
+  srv.listen(program.port, function () {
+    console.log();
+    console.log(' %s duo-serve running at %s', chalk.green('↑'), chalk.cyan('http://localhost:' + program.port + '/'));
+    console.log();
+  });
+}
 
 /**
  * Retrieve an array of plugins from `--use`.
