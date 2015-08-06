@@ -11,7 +11,6 @@ var server = require('../lib/server.js');
 var program = new Command('duo-serve')
   .usage('[options] entries')
   .option('-b, --body <path>', 'HTML content for the page (in a file)')
-  .option('-c, --copy', 'Turns on copy (instead of symlink)')
   .option('-C, --no-cache', 'Disables the cache during build', true)
   .option('-g, --global <name>', 'Export as a global with the given name')
   .option('-h, --html <path>', 'Path to custom handlebars template for page')
@@ -72,9 +71,9 @@ if (program.output) {
 /**
  * Retrieve an array of plugins from `--use`.
  *
- * @param {String} plugins
- * @param {String} root
- * @return {Array}
+ * @param {String} use   Comma-separated list of plugins to resolve.
+ * @param {String} root  The root directory to assume.
+ * @return {Array}       The plugin functions.
  */
 function plugins(use, root) {
   if (!use) return [];
