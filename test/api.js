@@ -264,38 +264,38 @@ describe('API', function () {
     });
   });
 
-  describe('Server#build(entry, sourceMap, callback)', function () {
+  describe('Server#build(entry)', function () {
     it('should render the file via duo', function (done) {
       var s = new Server(fixture('simple'));
-      s.build('index.js', 'inline', function (err, src) {
+      s.build('index.js').run(function (err, src) {
         if (err) return done(err);
         assert.strictEqual(vm.runInNewContext(src.code)(1), true);
         done();
       });
     });
 
-    it('should return the duo builder instance', function (done) {
+    it('should return the duo builder instance', function () {
       var s = new Server(fixture('simple'));
-      assert(s.build('index.css', 'inline', done) instanceof Duo);
+      assert(s.build('index.css') instanceof Duo);
     });
 
-    it('should turn on development mode', function (done) {
+    it('should turn on development mode', function () {
       var s = new Server(fixture('simple'));
-      var duo = s.build('index.css', 'inline', done);
+      var duo = s.build('index.css');
       assert.strictEqual(duo.development(), true);
     });
 
-    it('should set the duo global', function (done) {
+    it('should set the duo global', function () {
       var s = new Server(fixture('simple'));
       s.global('test');
-      var duo = s.build('index.js', 'inline', done);
+      var duo = s.build('index.js');
       assert.strictEqual(duo.global(), 'test');
     });
 
-    it('should switch the copy flag', function (done) {
+    it('should switch the copy flag', function () {
       var s = new Server(fixture('simple'));
       s.copy(true);
-      var duo = s.build('index.js', 'inline', done);
+      var duo = s.build('index.js');
       assert.strictEqual(duo.copy(), true);
     });
   });
@@ -303,144 +303,50 @@ describe('API', function () {
   describe('Server#buildTo(destination, callback)', function () {
     var s = new Server(fixture('build-to')).entry([ 'index.js', 'index.css' ]);
 
-    afterEach(function () {
+    before(function (done) {
+      this.timeout('5s');
+      s.buildTo('output', done);
+    });
+
+    after(function () {
       rm(fixture('build-to/components'));
       rm(fixture('build-to/output'));
     });
 
-    it('should create the destination directory', function (done) {
-      s.buildTo('output', function (err) {
-        if (err) return done(err);
-        assert(exists(fixture('build-to/output')));
-        done();
-      });
+    it('should create the destination directory', function () {
+      assert(exists(fixture('build-to/output')));
     });
 
-    it('should render the html to the destination directory', function (done) {
-      s.buildTo('output', function (err) {
-        if (err) return done(err);
-        var actual = read(fixture('build-to/output/index.html'), 'utf8');
-        var expected = read(fixture('build-to/out.html'), 'utf8');
-        assert.equal(actual.trim(), expected.trim());
-        done();
-      });
+    it('should render the html to the destination directory', function () {
+      var actual = read(fixture('build-to/output/index.html'), 'utf8');
+      var expected = read(fixture('build-to/out.html'), 'utf8');
+      assert.equal(actual.trim(), expected.trim());
     });
 
-    it('should render the js to the destination directory', function (done) {
-      s.buildTo('output', function (err) {
-        if (err) return done(err);
-        var actual = read(fixture('build-to/output/index.js'), 'utf8');
-        var expected = read(fixture('build-to/build.js'), 'utf8');
-        assert.equal(actual.trim(), expected.trim());
-        done();
-      });
+    it('should render the js to the destination directory', function () {
+      var actual = read(fixture('build-to/output/index.js'), 'utf8');
+      var expected = read(fixture('build-to/build.js'), 'utf8');
+      assert.equal(actual.trim(), expected.trim());
     });
 
-    it('should render the js map to the destination directory', function (done) {
-      s.buildTo('output', function (err) {
-        if (err) return done(err);
-        var actual = read(fixture('build-to/output/index.js.map'), 'utf8');
-        var expected = read(fixture('build-to/build.js.map'), 'utf8');
-        assert.equal(actual.trim(), expected.trim());
-        done();
-      });
+    it('should render the js map to the destination directory', function () {
+      var actual = read(fixture('build-to/output/index.js.map'), 'utf8');
+      var expected = read(fixture('build-to/build.js.map'), 'utf8');
+      assert.equal(actual.trim(), expected.trim());
     });
 
-    it('should render the css to the destination directory', function (done) {
-      s.buildTo('output', function (err) {
-        if (err) return done(err);
-        var actual = read(fixture('build-to/output/index.css'), 'utf8');
-        var expected = read(fixture('build-to/build.css'), 'utf8');
-        assert.equal(actual.trim(), expected.trim());
-        done();
-      });
-    });
-  });
-
-  describe('Server#handleRender(req, res, next)', function () {
-    it('should render the index', function (done) {
-      var s = new Server();
-
-      s.render = function (callback) {
-        callback();
-      };
-
-      var res = {
-        send: function (html) {
-          assert(html);
-          done();
-        }
-      };
-
-      Server().handleRender({}, res, done);
+    it('should render the css to the destination directory', function () {
+      var actual = read(fixture('build-to/output/index.css'), 'utf8');
+      var expected = read(fixture('build-to/build.css'), 'utf8');
+      assert.equal(actual.trim(), expected.trim());
     });
 
-    it('should handle errors too', function (done) {
-      var s = new Server();
-
-      s.render = function (base, callback) {
-        callback(new Error('fail'));
-      };
-
-      var req = {};
-      var res = { send: done };
-
-      s.handleRender(req, res, function (err) {
-        assert(err);
-        done();
-      });
-    });
-  });
-
-  describe('Server#handleBuild(req, res, next)', function () {
-    it('should build the entry', function (done) {
-      var s = new Server();
-
-      s.build = function (entry, callback) {
-        assert.equal(entry, 'index.js');
-        callback(null, 'foo');
-      };
-
-      var req = { url: '/build/index.js' };
-      var res = {
-        type: function (ext) {
-          assert.equal(ext, 'js');
-          return this;
-        },
-        send: function (src) {
-          assert.equal(src, 'foo');
-          done();
-        }
-      };
-
-      s.handleBuild(req, res, done);
+    it('should copy assets to the destination directory', function () {
+      assert(exists(fixture('build-to/output/duo.png')));
     });
 
-    it('should handle errors too', function (done) {
-      var s = new Server();
-      s.entry('index.js');
-
-      s.build = function (entry, sourceMap, callback) {
-        callback(new Error('fail'));
-      };
-
-      var req = { url: '/build/index.js' };
-      var res = {};
-
-      s.handleBuild(req, res, function (err) {
-        assert(err);
-        done();
-      });
-    });
-
-    it('should handle bypass for static assets', function (done) {
-      var s = new Server();
-      s.entry('index.js');
-
-      var req = { url: '/build/images/bg.png' };
-      var res = {};
-
-      s.handleBuild(req, res, done);
+    it('should copy assets from components to the destination directory', function () {
+      assert(exists(fixture('build-to/output/components/typefaces-source-code-black@master/fonts/source-code-black.eot')));
     });
   });
 });

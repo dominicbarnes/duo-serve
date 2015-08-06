@@ -1,3 +1,15 @@
+
+@font-face {
+  font-family: 'Source Code';
+  src: url('components/typefaces-source-code-black@master/fonts/source-code-black.eot');
+  src: url('components/typefaces-source-code-black@master/fonts/source-code-black.eot') format('embedded-opentype'),
+       url('components/typefaces-source-code-black@master/fonts/source-code-black.woff') format('woff'),
+       url('components/typefaces-source-code-black@master/fonts/source-code-black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+
 body {
-  background-color: #eee;
+  background-image: url('duo.png');
 }

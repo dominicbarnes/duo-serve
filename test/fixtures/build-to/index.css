@@ -1,3 +1,6 @@
+
+@import "typefaces/source-code-black";
+
 body {
-  background-color: #eee;
+  background-image: url('./duo.png');
 }
