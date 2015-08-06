@@ -1,4 +1,10 @@
 
+0.14.0 / 2015-08-06
+===================
+
+  * adding experimental output feature
+  * updating deps
+
 0.13.0 / 2015-08-04
 ===================
 
