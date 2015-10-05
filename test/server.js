@@ -1,4 +1,5 @@
 var assert = require('assert');
+var express = require('express');
 var fixture = require('path').join.bind(null, __dirname, 'fixtures');
 var glob = require('glob').sync;
 var read = require('fs').readFileSync;
@@ -75,5 +76,21 @@ describe('Web Server', function () {
       .expect('Content-Type', 'image/png')
       .expect('Content-Length', 79561)
       .end(done);
+  });
+
+  context('when used as a subapp', function () {
+    var sub = Server(fixture('subapp'))
+      .entry('index.css')
+      .entry('index.js')
+      .server();
+
+    it('should render the correct HTML pointing to sub paths for entries', function (done) {
+      var app = express().use('/sub', sub);
+
+      request(app)
+        .get('/sub')
+        .expect(200, read(fixture('subapp/out.html'), 'utf8'))
+        .end(done);
+    });
   });
 });
