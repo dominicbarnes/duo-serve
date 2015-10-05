@@ -1,6 +1,6 @@
 {
   "name": "duo-serve",
-  "version": "0.14.5",
+  "version": "0.15.0",
   "description": "A web server for developers using duo",
   "keywords": [
     "duo",
